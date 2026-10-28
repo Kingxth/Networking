@@ -56,7 +56,7 @@ During the initial phase of the project, a major issue occurred: **IP Overlappin
 
 ---
 
-## he Fix: Reassigning Unique Subnets
+## The Fix: Reassigning Unique Subnets
 
 To resolve the overlapping issue, we completely redesigned the conflicting subnets, assigning unique ranges to Router 2, Router 3, and Router 4, and properly defined `/30` point-to-point networks for the serial links.
 Here is an example of the configuration used to clean up the conflicting pools and interfaces (applied to **Router 2**):
