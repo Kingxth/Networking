@@ -1,0 +1,40 @@
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+hostname Router2
+!
+ip dhcp excluded-address 192.168.70.1 192.168.70.10
+ip dhcp excluded-address 192.168.75.1 192.168.75.10
+!
+ip dhcp pool vlan70-red1
+ network 192.168.70.0 255.255.255.0
+ default-router 192.168.70.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan75-red2
+ network 192.168.75.0 255.255.255.0
+ default-router 192.168.75.1
+ dns-server 8.8.8.8
+!
+interface GigabitEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.70.1 255.255.255.0
+interface GigabitEthernet0/1.10
+ encapsulation dot1Q 10
+ ip address 192.168.75.1 255.255.255.0
+interface Serial0/0/0
+ ip address 10.0.12.2 255.255.255.252
+ no shutdown
+interface Serial0/0/1
+ ip address 10.0.24.1 255.255.255.252
+ clock rate 2000000
+ no shutdown
+!
+router rip
+ version 2
+ no auto-summary
+ network 10.0.12.0
+ network 10.0.24.0
+ network 192.168.70.0
+ network 192.168.75.0
+end

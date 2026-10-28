@@ -1,0 +1,72 @@
+hostname Router1
+!
+ip dhcp excluded-address 192.168.50.1 192.168.50.10
+ip dhcp excluded-address 192.168.20.1 192.168.20.10
+ip dhcp excluded-address 192.168.30.1 192.168.30.10
+ip dhcp excluded-address 192.168.10.1 192.168.10.10
+ip dhcp excluded-address 192.168.40.1 192.168.40.10
+ip dhcp excluded-address 192.168.60.1 192.168.60.10
+!
+ip dhcp pool vlan10-red1
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan2-red1
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan3-red1
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan1-red2
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan2-red
+ network 192.168.50.0 255.255.255.0
+ default-router 192.168.50.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan3-red2
+ network 192.168.60.0 255.255.255.0
+ default-router 192.168.60.1
+ dns-server 8.8.8.8
+!
+interface GigabitEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+interface GigabitEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+interface GigabitEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+interface GigabitEthernet0/1.10
+ encapsulation dot1Q 10
+ ip address 192.168.40.1 255.255.255.0
+interface GigabitEthernet0/1.20
+ encapsulation dot1Q 20
+ ip address 192.168.50.1 255.255.255.0
+interface GigabitEthernet0/1.30
+ encapsulation dot1Q 30
+ ip address 192.168.60.1 255.255.255.0
+interface Serial0/0/0
+ ip address 10.0.12.1 255.255.255.252
+ clock rate 2000000
+ no shutdown
+interface Serial0/0/1
+ ip address 10.0.13.1 255.255.255.252
+ no shutdown
+!
+router rip
+ version 2
+ no auto-summary
+ network 10.0.12.0
+ network 10.0.13.0
+ network 192.168.10.0
+ network 192.168.20.0
+ network 192.168.30.0
+ network 192.168.40.0
+ network 192.168.50.0
+ network 192.168.60.0
+end

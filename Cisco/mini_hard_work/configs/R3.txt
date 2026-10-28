@@ -1,0 +1,50 @@
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+hostname Router3
+!
+ip dhcp excluded-address 192.168.150.1 192.168.150.10
+ip dhcp excluded-address 192.168.140.1 192.168.140.10
+ip dhcp excluded-address 192.168.130.1 192.168.130.10
+!
+ip dhcp pool vlan8-red2
+ network 192.168.150.0 255.255.255.0
+ default-router 192.168.150.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan9-red2
+ network 192.168.140.0 255.255.255.0
+ default-router 192.168.140.1
+ dns-server 8.8.8.8
+ip dhcp pool vlan130-red1
+ network 192.168.130.0 255.255.255.0
+ default-router 192.168.130.1
+ dns-server 8.8.8.8
+!
+interface GigabitEthernet0/0.8
+ encapsulation dot1Q 8
+ ip address 192.168.150.1 255.255.255.0
+interface GigabitEthernet0/0.9
+ encapsulation dot1Q 9
+ ip address 192.168.140.1 255.255.255.0
+interface GigabitEthernet0/1.40
+ encapsulation dot1Q 40
+ ip address 192.168.130.1 255.255.255.0
+interface Serial0/0/0
+ ip address 10.0.13.2 255.255.255.252
+ clock rate 2000000
+ no shutdown
+interface Serial0/0/1
+ ip address 10.0.34.1 255.255.255.252
+ clock rate 2000000
+ no shutdown
+!
+router rip
+ version 2
+ no auto-summary
+ network 10.0.13.0
+ network 10.0.34.0
+ network 192.168.130.0
+ network 192.168.140.0
+ network 192.168.150.0
+end
