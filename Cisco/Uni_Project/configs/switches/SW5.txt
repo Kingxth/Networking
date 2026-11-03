@@ -1,0 +1,181 @@
+SW5#show running-config 
+Building configuration...
+
+Current configuration : 2991 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname SW5
+!
+enable secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
+!
+!
+!
+ip ssh version 2
+ip domain-name uni.local
+!
+username cisco secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
+!
+vtp mode transparent
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan 5
+ name C_5
+!
+vlan 20
+ name B_2003
+!
+vlan 99
+ name MANAGEMENT
+!
+vlan 396
+ name B_396
+!
+interface FastEthernet0/1
+ shutdown
+!
+interface FastEthernet0/2
+ shutdown
+!
+interface FastEthernet0/3
+ shutdown
+!
+interface FastEthernet0/4
+ shutdown
+!
+interface FastEthernet0/5
+ shutdown
+!
+interface FastEthernet0/6
+ description LAN_2003_HOSTS
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 132
+ switchport port-security mac-address sticky 
+ switchport port-security violation restrict 
+ switchport port-security mac-address sticky 0002.4A1E.C864
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/7
+ shutdown
+!
+interface FastEthernet0/8
+ description LAN_5_HOSTS
+ switchport access vlan 5
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 5
+ switchport port-security mac-address sticky 
+ switchport port-security violation restrict 
+ switchport port-security mac-address sticky 0009.7C63.9993
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/9
+ shutdown
+!
+interface FastEthernet0/10
+ shutdown
+!
+interface FastEthernet0/11
+ shutdown
+!
+interface FastEthernet0/12
+ description LAN_396_HOSTS
+ switchport access vlan 396
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 100
+ switchport port-security mac-address sticky 
+ switchport port-security violation restrict 
+ switchport port-security mac-address sticky 000D.BD66.3198
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/13
+ shutdown
+!
+interface FastEthernet0/14
+ shutdown
+!
+interface FastEthernet0/15
+ shutdown
+!
+interface FastEthernet0/16
+ shutdown
+!
+interface FastEthernet0/17
+ shutdown
+!
+interface FastEthernet0/18
+ shutdown
+!
+interface FastEthernet0/19
+ shutdown
+!
+interface FastEthernet0/20
+ shutdown
+!
+interface FastEthernet0/21
+ shutdown
+!
+interface FastEthernet0/22
+ shutdown
+!
+interface FastEthernet0/23
+ shutdown
+!
+interface FastEthernet0/24
+ shutdown
+!
+interface GigabitEthernet0/1
+ description TRUNK_TO_R5
+ switchport trunk allowed vlan 5,20,99,396
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan99
+ ip address 192.168.99.6 255.255.255.0
+!
+ip default-gateway 192.168.99.1
+!
+banner motd ^C ACCESO RESTRINGIDO - SOLO PERSONAL AUTORIZADO ^C
+!
+!
+!
+line con 0
+ logging synchronous
+ login local
+ exec-timeout 5 0
+!
+line vty 0 4
+ exec-timeout 5 0
+ login local
+ transport input ssh
+line vty 5 15
+ exec-timeout 5 0
+ login local
+ transport input ssh
+!
+!
+!
+!
+end
+
+
+SW5# 
